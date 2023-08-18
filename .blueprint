@@ -1,0 +1,23 @@
+created:
+    - database/factories/JorongFactory.php
+    - database/factories/UserFactory.php
+    - database/factories/LetterFactory.php
+    - database/factories/ApplicationFactory.php
+    - database/factories/DetailApplicationFactory.php
+    - database/migrations/2023_08_15_210734_create_jorongs_table.php
+    - database/migrations/2023_08_15_210735_create_users_table.php
+    - database/migrations/2023_08_15_210736_create_letters_table.php
+    - database/migrations/2023_08_15_210737_create_applications_table.php
+    - database/migrations/2023_08_15_210738_create_detail_applications_table.php
+    - app/Models/Jorong.php
+    - app/Models/User.php
+    - app/Models/Letter.php
+    - app/Models/Application.php
+    - app/Models/DetailApplication.php
+models:
+    UserProfile: {  }
+    Jorong: { name: string, relationships: { hasMany: 'Application, User' } }
+    User: { name: string, username: string, jorong_id: 'id foreign:jorongs.id onUpdate:cascade onDelete:cascade nullable', password: string, relationships: { belongsTo: Jorong } }
+    Letter: { name: string, relationships: { hasMany: DetailApplication } }
+    Application: { citizen_name: string, place_of_birth: string, date_of_birth: date, gender: 'enum:M,F', religion: string, occupation: string, property_taxes: string, jorong_id: 'id foreign:jorongs.id onUpdate:cascade onDelete:cascade', date: date, need: string, ref_number: 'string nullable', accepted_date: 'date nullable', sign_url: 'string nullable', relationships: { hasMany: DetailApplication, belongsTo: Jorong } }
+    DetailApplication: { application_id: 'id foreign:applications.id onUpdate:cascade onDelete:cascade', letter_id: 'id foreign:letters.id onUpdate:cascade onDelete:cascade', relationships: { belongsTo: 'Application, Letter' } }

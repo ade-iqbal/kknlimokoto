@@ -1,0 +1,41 @@
+models:
+  Jorong:
+    name: string
+    relationships:
+      hasMany: Application, User
+
+  User:
+    name: string
+    username: string
+    jorong_id: id foreign:jorongs.id onUpdate:cascade onDelete:cascade nullable
+    password: string
+    relationships:
+      belongsTo: Jorong
+
+  Letter:
+    name: string
+    relationships:
+      hasMany: DetailApplication
+
+  Application:
+    citizen_name: string
+    place_of_birth: string
+    date_of_birth: date
+    gender: enum:M,F
+    religion: string
+    occupation: string
+    jorong_id: id foreign:jorongs.id onUpdate:cascade onDelete:cascade
+    date: date
+    need: string
+    ref_number: string nullable
+    property_taxes: string nullable
+    accepted_date: date nullable
+    relationships:
+      hasMany: DetailApplication
+      belongsTo: Jorong
+
+  DetailApplication:
+    application_id: id foreign:applications.id onUpdate:cascade onDelete:cascade
+    letter_id: id foreign:letters.id onUpdate:cascade onDelete:cascade
+    relationships:
+      belongsTo: Application, Letter
